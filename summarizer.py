@@ -1,7 +1,10 @@
 import os
 import openai
+from openai import OpenAI
 from dotenv import load_dotenv
-import fitz
+from pdfminer.high_level import extract_text
+import re
+import spacy
 
 # Load environment variable from .env file
 load_dotenv()
@@ -10,6 +13,8 @@ class Summarizer:
     def __init__(self):
         self.api_key = os.getenv("OPENAI_API_KEY")
         openai.api_key = self.api_key
+        self.client = OpenAI()
+        self.nlp = spacy.load("en_core_web_sm")
 
     # Summarize text using the GPT-4o model
     def summarize_text(self, text, max_tokens=1024, temperature=0.7):
@@ -20,13 +25,16 @@ class Summarizer:
         {text}
         """
 
-        response = openai.Completion.create(
-            engine="gpt-4o",
-            prompt=prompt,
+        response = self.client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            model="gpt-3.5-turbo",
             max_tokens=max_tokens,
             temperature=temperature
         )
-        summary = response.choices[0].text.strip()
+        summary = response.choices[0].message.content.text.strip()
         return summary
     
     # Write the summary to a text file
@@ -42,26 +50,44 @@ class Summarizer:
     
     # Extract text from a PDF file
     def extract_text_from_pdf(self, pdf_path):
-        doc = fitz.open(pdf_path)
-        full_text = ""
-        for page in doc:
-            full_text += page.get_text()
-        return full_text
+        text = extract_text(pdf_path)
+        text = text.lower()
+        return text
     
-    # Split text into chunks of a specified size
-    def split_text(self, text, chunk_size=3000):
-        return [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
-    
-    # Split text by sections
-    def split_text_by_sections(self, text, section_delimiter="Section"):
-        sections = text.split(section_delimiter)
-        sections = [section_delimiter + section for section in sections if section.strip()]
-        return sections
+    # Split text into paragraphs
+    def split_text_by_paragraphs(self, text):
+        paragraphs = re.split(r'\n\s*\n', text)
+        return [para.strip() for para in paragraphs if para.strip()]
+
+    # Group alike paragraphs
+    def group_paragraphs_by_similarity(self, paragraphs, threshold=0.5):
+        doc_paragraphs = [self.nlp(para) for para in paragraphs]
+        groups = []
+        current_group = []
+
+        for i, para in enumerate(doc_paragraphs):
+            if not current_group:
+                current_group.append(paragraphs[i])
+                continue
+            
+            similarity = current_group[-1].similarity(para)
+            if similarity > threshold:
+                current_group.append(paragraphs[i])
+            else:
+                groups.append("\n\n".join(current_group))
+                current_group = [paragraphs[i]]
+        
+        if current_group:
+            groups.append("\n\n".join(current_group))
+        
+        return groups
     
     # Summarize text from a PDF file
     def summarize_document(self, pdf_path):
         full_text = self.extract_text_from_pdf(pdf_path)
-        sections = self.split_text_by_sections(full_text)
+        cleaned_text = self.clean_large_text(full_text)
+        paragraphs = self.split_text_by_paragraphs(cleaned_text)
+        sections = self.group_paragraphs_by_similarity(paragraphs)
 
         summaries = []
         for section in sections:
@@ -69,8 +95,9 @@ class Summarizer:
             summaries.append(summary)
 
         combined_summary = ' '.join(summaries)
+        final_summary = self.summarize_text(combined_summary)
 
-        return combined_summary
+        return final_summary
 
     # Check the summary and revise
     def check_summary(self, text, max_tokens=1024, temperature=0.7):
@@ -81,12 +108,82 @@ class Summarizer:
         {text}
         """
 
-        response = openai.Completion.create(
-            engine="gpt-4o",
-            prompt=prompt,
+        response = self.client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            model="gpt-3.5-turbo",
             max_tokens=max_tokens,
             temperature=temperature
         )
-        revised_summary = response.choices[0].text.strip()
+        revised_summary = response.choices[0].message.content.text.strip()
         return revised_summary
+    
+    # Split text into manageable chunks
+    def split_text_into_chunks(self, text, chunk_size=2048):
+        chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+        return chunks
+    
+    # Clean large text
+    def clean_large_text(self, text):
+        chunks = self.split_text_into_chunks(text)
+        cleaned_chunks = [self.clean_text_with_gpt(chunk) for chunk in chunks]
+        cleaned_text = ' '.join(cleaned_chunks)
+        return cleaned_text
+    
+    # Clean using gpt-4o, this might start to get costly
+    def clean_text_with_gpt(self, text, max_tokens=2048, temperature=0.7):
+        prompt = f"""
+        Clean the following text by removing all unnecessary content, such as navigation bars, footers, references, and other non-essential information. Ensure that only the main content remains. Do not include any introductory phrases or concluding statemets; provide only the cleaned text.
+        
+        Text to clean:
+        {text}
+        """
+        response = self.client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            model="gpt-3.5-turbo",
+            max_tokens=max_tokens,
+            temperature=temperature
+        )
+        cleaned_text = response.choices[0].message.content.text.strip()
+        return cleaned_text
+
+
+    # Clean the text by removing unwanted text
+    def clean_text(self, text):
+        # Define patterns to remove unwanted text
+        patterns = [
+            r'Privacy policy.*Terms of Use and Privacy Policy.',  # Remove footer
+            r'Text is available under the Creative Commons Attribution-ShareAlike License.*',  # Remove license info
+            r'Contents.*hide',  # Remove contents table
+            r'\[\d+\]',  # Remove references like [48]
+            r'\[.*?\]',  # Remove any text in brackets
+            r'\n+',  # Replace multiple newlines with a single newline
+            r'Edit\n',  # Remove 'Edit' links
+            r'Jump to navigation\nJump to search\n',  # Remove navigation text
+            r'Categories:.*?\n',  # Remove category listings
+            r'Hidden categories:.*?\n',  # Remove hidden category listings
+            r'Help\n',  # Remove help links
+            r'From Wikipedia, the free encyclopedia',  # Remove Wikipedia intro
+            r'[\r\n]+',  # Replace multiple newlines with a single newline
+            r'^\s*$',  # Remove empty lines
+            r'^[ \t]+|[ \t]+$',  # Trim leading/trailing spaces
+        ]
+        
+        for pattern in patterns:
+            text = re.sub(pattern, '', text, flags=re.DOTALL | re.MULTILINE)
+            
+        # Further cleaning using spaCy
+        doc = self.nlp(text)
+        cleaned_sentences = []
+        for sent in doc.sents:
+            if len(sent.text.strip()) > 10:
+                cleaned_sentences.append(sent.text.strip())
+        
+        cleaned_text = ' '.join(cleaned_sentences)
+        return cleaned_text.strip()
 
