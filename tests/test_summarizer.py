@@ -1,5 +1,10 @@
-from summarizer import Summarizer
 import os
+import sys
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, project_root)
+
+from summarizer import Summarizer
 
 pdf_path = os.path.join(os.path.dirname(__file__), "OSWikipedia.pdf")
 
@@ -10,15 +15,6 @@ def test_extract_text_from_pdf():
     assert len(text) > 0
     print("Extracted Text: ")
     print(text[:1000])
-
-def test_clean_large_text():
-    summarizer = Summarizer()
-    text = summarizer.extract_text_from_pdf(pdf_path)
-    cleaned_text = summarizer.clean_large_text(text)
-    assert cleaned_text is not None
-    assert len(cleaned_text) > 0
-    print("Cleaned Text: ")
-    print(cleaned_text[:1000])
 
 def test_split_text_by_paragraphs():
     summarizer = Summarizer()
@@ -53,6 +49,7 @@ def test_clean_text():
     assert len(cleaned_text) > 0
     print("Cleaned Text: ")
     print(cleaned_text[:1000])
+    summarizer.to_file(cleaned_text, "cleaned_text")
 
 
 def main():
@@ -65,7 +62,7 @@ def main():
 
 if __name__ == "__main__":
     # main()
-    test_extract_text_from_pdf()
-    test_clean_large_text()
-    test_split_text_by_paragraphs()
-    test_group_paragraphs_by_similarity()
+    # test_extract_text_from_pdf()
+    test_clean_text()
+    # test_split_text_by_paragraphs()
+    # test_group_paragraphs_by_similarity()

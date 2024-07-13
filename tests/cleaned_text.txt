@@ -1,0 +1,425 @@
+An operating system (OS) is system software that manages computer hardware and software resources, and provides common services for computer programs.
+
+Time-sharing operating systems schedule tasks for efficient use of the system and may also include accounting software for cost allocation of processor time, mass storage, peripherals, and other resources.
+
+For hardware functions such as input and output and memory allocation, the operating system acts as an intermediary between programs and the computer hardware, although the application code is usually executed directly by the hardware and frequently makes system calls to an OS function or is interrupted by it. Operating systems are found on many devices that contain a computer – from cellular phones and video game consoles to web servers and supercomputers.
+
+In the personal computer market, as of September 2023, Microsoft Windows holds a dominant market share of around 68%. MacOS by Apple Inc. is in second place (20%), and the varieties of Linux, including ChromeOS, are collectively in third place (7%). In the mobile sector (including smartphones and tablets), as of September 2023, Android's share is 68.92%, followed by Apple's iOS and iPadOS with 30.42%, and other operating systems with 0.66%. Linux distributions are dominant in the server and supercomputing sectors. Operating systems (special-purpose operating systems), such as embedded and real-time systems, exist for many applications. Security-focused operating systems also exist. Some operating systems have low system requirements (e.g. lightweight Linux distribution), while others may have higher system requirements. Some operating systems require installation or may come pre-installed with purchased computers (OEM installation), whereas others may run directly from media (i.e. live CD) or flash memory (i.e. USB stick). An operating system is difficult to define but has been called "the layer of software that manages a computer's resources for its users and their applications." Operating systems include the software that is always running, called a kernel—but can include other software as well. The two other types of programs that can run on a computer are system programs—which are associated with the operating system but may not be part of the kernel—and applications—all other software. There are three main purposes that an operating system fulfills: Operating systems allocate resources between different applications, deciding when they will receive central processing unit (CPU) time or space in memory. On modern personal computers, users often want to run several applications at once. In order to ensure that one program cannot monopolize the computer's limited hardware resources, the operating system gives each application a share of the resource, either in time (CPU) or space (memory). The operating system also must isolate applications from each other to protect them from errors and security vulnerabilities in another application's code but enable communications between different applications. Operating systems provide an interface that abstracts the details of accessing hardware details (such as physical memory) to make things easier for programmers. Virtualization also enables the operating system to mask limits. ed hardware resources; for example, virtual memory can provide a program with the illusion of nearly unlimited memory that exceeds the computer's actual memory.
+
+operating systems provide common services, such as an interface for accessing network and disk devices. this enables an application to be run on different hardware without needing to be rewritten. which services to include in an operating system varies greatly, and this functionality makes up the great majority of code for most operating systems.
+
+types of operating systems
+
+multicomputer operating systems
+
+with multiprocessors multiple cpus share memory. a multicomputer or cluster computer has multiple cpus, each of which has its own memory. multicomputers were developed because large multiprocessors are difficult to engineer and prohibitively expensive; they are universal in cloud computing because of the size of the machine needed. the different cpus often need to send and receive messages to each other; to ensure good performance, the operating systems for these machines need to minimize this copying of packets. newer systems are often multiqueue—separating groups of users into separate queues—to reduce the need for packet copying and support more concurrent users. another technique is remote direct memory access, which enables each cpu to access memory belonging to other cpus. multicomputer operating systems often support remote procedure calls where a cpu can call a procedure on another cpu, or distributed shared memory, in which the operating system uses virtualization to generate shared memory that does not actually exist.
+
+distributed systems
+
+a distributed system is a group of distinct, networked computers—each of which might have their own operating system and file system. unlike multicomputers, they may be dispersed anywhere in the world. middleware, an additional software layer between the operating system and applications, is often used to improve consistency. embedded
+
+embedded operating systems are designed to be used in embedded computer systems, whether they are internet of things objects or not connected to a network. embedded systems include many household appliances. the distinguishing factor is that they do not load user-installed software. consequently, they do not need protection between different applications, enabling simpler designs. very small operating systems might run in less than 10 kilobytes, and the smallest are for smart cards. examples include embedded linux, qnx, vxworks, and the extra-small systems riot and tinyos.
+
+real-time
+
+a real-time operating system is an operating system that guarantees to process events or data by or at a specific moment in time. hard real-time systems require exact timing and are common in manufacturing, avionics, military, and other similar uses. with soft real-time systems, the occasional missed event is acceptable; this category often includes audio or multimedia systems, as well as smartphones. in order for hard real-time systems be sufficiently exact in their timing, often they are just a library with no protection between applications, such as ecos.
+
+virtual machine
+
+a virtual machine is an operating system that runs as an application on top of another operating system. the virtual machine is unaware that it is an application and operates as if it had its own hardware. virtual machines can be paused, saved, and resumed, making them useful for operating systems research, development, and debugging. they also enhance portability by enabling applications to be run on a computer even if they are not compatible with the base operating system. In the 1940s, the earliest electronic digital systems had no operating systems. Electronic systems of this time were programmed on rows of mechanical switches or by jumper wires on plugboards. These were special-purpose systems that, for example, generated ballistics tables for the military or controlled the printing of payroll checks from data on punched paper cards. After programmable general-purpose computers were invented, machine languages were introduced that sped up the programming process.
+
+In the early 1950s, a computer could execute only one program at a time. Each user had sole use of the computer for a limited period and would arrive at a scheduled time with their program and data on punched paper cards or punched tape. The program would be loaded into the machine, and the machine would be set to work until the program completed or crashed. Programs could generally be debugged via a front panel using toggle switches and panel lights.
+
+Later machines came with libraries of programs that would be linked to a user's program to assist in operations such as input and output and compiling. This was the genesis of the modern-day operating system. However, machines still ran a single job at. at Cambridge University in England, the job queue was at one time a washing line (clothesline) from which tapes were hung with different colored clothes-pegs to indicate job priority.
+
+By the late 1950s, programs that one would recognize as an operating system were beginning to appear. Often pointed to as the earliest recognizable example is GM-NAA I/O, released in 1956 on the IBM 704. The first known example that actually referred to itself was the SHARE Operating System, a development of GM-NAA I/O, released in 1959. In a May 1960 paper describing the system, George Ryckman noted:
+
+The development of computer operating systems have materially aided the problem of getting a program or series of programs on and off the computer efficiently.
+
+One of the more famous examples that is often found in discussions of early systems is the Atlas Supervisor, running on the Atlas in 1962. It was referred to as such in a December 1961 article describing the system, but the context of "the operating system" is more along the lines of "the system operates in the fashion." The Atlas team itself used the term "supervisor," which was widely used along with "monitor." Brinch Hansen described it as "the most significant breakthrough in the history of operating systems."
+
+Through the 1950s, many major features were pioneered in the field of operating systems on mainframe computers, including batch processing, input/output interrupting, buffering, multitasking, spooling, runtime libraries, link-loading, and programs for sorting records in files. These features were included or not included in application software at the option of application programmers, rather than in a separate operating system used by all appl. the share operating system was released as an integrated utility for the ibm 704, and later in the 709 and 7090 mainframes, although it was quickly supplanted by ibsys/ibjob on the 709, 7090 and 7094, which in turn influenced the later 7040-pr-150 (7040/7044) and 1410-pr-155 (1410/7010) operating systems.
+
+during the 1960s, ibm's os/360 introduced the concept of a single os spanning an entire product line, which was crucial for the success of the system/360 machines. ibm's current mainframe operating systems are distant descendants of this original system and modern machines are backward compatible with applications written for os/360.
+
+os/360 also pioneered the concept that the operating system keeps track of all of the system resources that are used, including program and data space allocation in main memory and file space in secondary storage, and file locking during updates. when a process is terminated for any reason, all of these resources are re-claimed by the operating system.
+
+the alternative cp-67 system for the s/360-67 started a whole line of ibm operating systems focused on the concept of virtual machines. other operating systems used on ibm s/360 series mainframes included systems developed by ibm: dos/360 (disk operating system), tss/360 (time sharing system), tos/360 (tape operating system), bos/360 (basic operating system), and acp (airline control program), as well as a few non-ibm systems: mts (michigan terminal system), music (multi-user system for interactive computing), and orvyl (stanford timesharing system).
+
+control data corporation developed the scope operating system in the 1960s, for batch processing. in cooperation with the university of minnesota, the kronos and later the nos operating systems were developed during the 1970s, which supported simultaneous batch and timesharing use. like many commercial timesharing systems, its interface was an extension of the dartmouth basic operating systems, one of the pioneering efforts in timeshar. control data and the university of illinois developed the PLATO operating system, which used plasma panel displays and long-distance time sharing networks. PLATO was remarkably innovative for its time, featuring real-time chat, and multi-user graphical games.
+
+In 1961, Burroughs Corporation introduced the B5000 with the MCP (Master Control Program) operating system. The B5000 was a stack machine designed to exclusively support high-level languages with no assembler. The MCP was the first OS to be written exclusively in a high-level language (ESPOL, a dialect of ALGOL). MCP also introduced many other ground-breaking innovations, such as being the first commercial implementation of virtual memory. MCP is still in use today in the Unisys company's MCP/ClearPath line of computers.
+
+UNIVAC, the first commercial computer manufacturer, produced a series of EXEC operating systems. Like all early mainframe systems, this batch-oriented system managed magnetic drums, disks, card readers, and line printers. In the 1970s, UNIVAC produced the Real-Time Basic (RTB) system to support large-scale time sharing, also patterned after the Dartmouth BC system.
+
+General Electric developed General Electric Comprehensive Operating Supervisor (GECOS), which primarily supported batch processing. After its acquisition by Honeywell, it was renamed General Comprehensive Operating System (GCOS).
+
+Bell Labs, General Electric, and MIT developed Multiplexed Information and Computing Service (Multics), which introduced the concept of ringed security privilege levels.
+
+Digital Equipment Corporation developed many operating systems for its various computer lines, including TOPS-10 and TOPS-20 time-sharing systems for the 36-bit PDP-10 class systems. Before the widespread use of UNIX, TOPS-10 was a particularly popular system in universities, and in the early ARPANET community. RT-11 was a single-user real-time OS for the PDP-11 class minicomputer, and RSX-11 was t The corresponding multi-user OS.
+
+From the late 1960s through the late 1970s, several hardware capabilities evolved that allowed similar or ported software to run on more than one system. Early systems had utilized microprogramming to implement features on their systems in order to permit different underlying computer architectures to appear to be the same as others in a series. In fact, most 360s after the 360/40 (except the 360/44, 360/75, 360/91, 360/95, and 360/195) were microprogrammed implementations.
+
+The enormous investment in software for these systems made since the 1960s caused most of the original computer manufacturers to continue to develop compatible operating systems along with the hardware. Notable supported mainframe operating systems include:
+
+- Burroughs MCP – B5000, 1961 to Unisys ClearPath/MCP, present
+- IBM OS/360 – IBM System/360, 1966 to IBM z/OS, present
+- IBM CP-67 – IBM System/360, 1967 to IBM z/VM, present
+- UNIVAC EXEC 8 – UNIVAC 1108, 1967, to OS 2200 Unisys ClearPath Dorado, present
+
+Microcomputers
+
+The earliest microcomputers lacked the capacity or requirement for the complex operating systems used in mainframes and minicomputers. Instead, they used minimalistic operating systems, often loaded from ROM and referred to as monitors. A significant early disk operating system was CP/M, widely supported across many early microcomputers. Microsoft closely imitated CP/M with its MS-DOS, which gained widespread popularity as the operating system for the IBM PC (IBM's version was known as IBM DOS or PC DOS).
+
+In the 1980s, Apple Computer Inc. (now Apple Inc.) introduced the Apple Macintosh alongside its popular Apple II series of microcomputers. The Macintosh had an innovative graphical user interface (GUI) and a mouse; it ran an operating system later known as the PC DOS was an early personal computer OS that featured a command-line interface. 80386 CPU chip in October 1985, with 32-bit architecture and paging capabilities, provided personal computers with the ability to run multitasking operating systems like those of earlier superminicomputers and mainframes. Microsoft responded to this progress by hiring Dave Cutler, who had developed the VMS operating system for Digital Equipment Corporation. He would lead the development of the Windows NT operating system, which continues to serve as the basis for Microsoft's operating systems line. Steve Jobs, a co-founder of Apple Inc., started NeXT Computer Inc., which developed the NeXTSTEP operating system. NeXTSTEP would later be acquired by Apple Inc. and used, along with code from FreeBSD as the core of macOS.
+
+The GNU Project was started by activist and programmer Richard Stallman with the goal of creating a complete free software replacement to the proprietary Unix operating system. In 1991, Finnish computer science student Linus Torvalds, with cooperation from volunteers collaborating over the internet, released the first version of the Linux kernel. It was soon merged with the GNU user space components and system software to form a complete operating system commonly referred to as Linux.
+
+The Berkeley Software Distribution (BSD) is the Unix derivative distributed by the University of California, Berkeley, starting in the 1970s. Freely distributed and ported to many minicomputers, it eventually also gained a following for use on PCs, mainly as FreeBSD, NetBSD, and OpenBSD. The Unix-like family is a diverse group of operating systems, with several major sub-categories including System V, BSD, and Linux. The name "Unix" is a trademark of the Open Group. Evolution of Unix systems: Unix-like systems run on a wide variety of computer architectures and are used heavily for servers in business, workstations in academic and engineering environments. Five operating systems are certified by the Open Group as Unix. BSD and its descendants: A subgroup of the Unix family is the Berkeley Software Distribution (BSD) family, which includes FreeBSD, NetBSD, and OpenBSD. These operating systems are commonly found on webservers and can also function as a personal computer OS. In 1974, University of California, Berkeley installed its first Unix system. Over time, students and staff in the Computer Science department there began adding new programs to make things easier, such as text editors. When Berkeley received new VAX computers in 1978 with Unix installed, the school's undergraduates modified Unix even more in order to take the first server for the World Wide Web ran on NeXTSTEP, based on BSD. The Defense Advanced Research Projects Agency of the US Department of Defense took interest, and decided to fund the project. Many schools, corporations, and government organizations took notice and started to use Berkeley's version of Unix instead of the official one distributed by AT&T.
+
+Steve Jobs, upon leaving Apple Inc. in 1985, formed NeXT Inc., a company that manufactured high-end computers running on a variation of BSD called NeXTSTEP. One of these computers was used by Tim Berners-Lee as the first webserver to create the World Wide Web.
+
+Developers like Keith Bostic encouraged the project to replace any non-free code that originated with Bell Labs. Once this was done, however, AT&T sued. After two years of legal disputes, the BSD project spawned a number of free derivatives, such as NetBSD and FreeBSD (both in 1993), and OpenBSD (from NetBSD in 1995). the operating system was first released in 1999 as mac os x server 1.0, followed in march 2001 by a client version (mac os x v10.0 "cheetah"). since then, six more distinct "client" and "server" editions of macos have been released, until the two were merged in os x 10.7 "lion".
+
+prior to its merging with macos, the server edition – macos server – was architecturally identical to its desktop counterpart and usually ran on apple's line of macintosh server hardware. macos server included work group management and administration software tools that provide simplified access to key network services, including a mail transfer agent, a samba server, an ldap server, a domain name server, and others. with mac os x v10.7 lion, all server aspects of mac os x server have been integrated into the client version and the product re-branded as "os x" (dropping "mac" from the name). the server tools are now offered as an application.
+
+z/os unix system services
+
+first introduced as the openedition upgrade to mvs/esa system product version 4 release 3, announced february 1993 with support for posix and other standards. z/os unix system services is built on top of mvs services and cannot run independently. while ibm initially introduced openedition to satisfy fips requirements, several z/os component now require unix services, e.g., tcp/ip.
+
+linux
+
+the linux kernel originated in 1991, as a project of linus torvalds, while a university student in finland. he posted information about his project on a newsgroup for computer students and programmers, and received support and assistance from volunteers who succeeded in creating a complete and functional kernel.
+
+linux is unix-like, but was developed without any unix code, unlike bsd and its variants. because of its open license model, the linux kernel code is available for study and modification, which resulted in its use on a wide range of comput. Linux is used on only 2.81% of all "desktop" (or laptop) PCs, but it has been widely adopted for use in servers and embedded systems such as cell phones. Linux has superseded Unix on many platforms and is used on most supercomputers, including all 500 most powerful supercomputers on the TOP500 list. It is also commonly used on smartphones and smartwatches. The Linux kernel is used in popular distributions such as Red Hat, Debian, Ubuntu, Linux Mint, and Google's Android, ChromeOS, and ChromiumOS.
+
+Microsoft Windows is a family of proprietary operating systems primarily targeted to x86 architecture-based computers. As of 2022, its worldwide market share on all platforms was approximately 30%, and on desktop/laptop platforms, its market share was approximately 75%. The latest version is Windows 11. Microsoft Windows was first released in 1985, as an operating environment running on top of MS-DOS. In 1995, Windows 95 was released, which only used MS-DOS as a bootstrap. Later versions have all been based on the Windows NT kernel. Current client versions of Windows run on IA-32, x86-64, and ARM microprocessors. Server editions of Windows are widely used. age on servers is not as widespread as on personal computers as windows competes against linux and bsd for server market share.
+
+reactos is a windows-alternative operating system, which is being developed on the principles of windows – without using any of microsoft's code.
+
+there have been many operating systems that were significant in their day but are no longer so, such as amigaos; os/2 from ibm and microsoft; classic mac os, the non-unix precursor to apple's macos; beos; xts-300; risc os; morphos; haiku; baremetal and freemint. some are still used in niche markets and continue to be developed as minority platforms for enthusiast communities and specialist applications.
+
+the z/os operating system for ibm z/architecture mainframe computers is still being used and developed, and openvms, formerly from dec, is still under active development by vms software inc. the ibm i operating system for ibm as/400 and ibm power systems midrange computers is also still being used and developed.
+
+yet other operating systems are used almost exclusively in academia, for operating systems education or to do research on operating system concepts. a typical example of a system that fulfills both roles is minix, while for example singularity is used purely for research. another example is the oberon system designed at eth zürich by niklaus wirth, jürg gutknecht and a group of students at the former computer systems institute in the 1980s. it was used mainly for research, teaching, and daily work in wirth's group.
+
+other operating systems have failed to win significant market share, but have introduced innovations that have influenced mainstream operating systems, not least bell labs' plan 9.
+
+components
+
+the components of an operating system are designed to ensure that various parts of a computer function cohesively. all user software must interact with the operating system to access hardware.
+
+kernel
+
+main article: kernel (operating system)
+
+with the aid of firmware and device drivers, the kernel provides the most basic level of control over all of the computer's hardware devices. it manages memory access for programs in the ram, it determines which programs get access to which hardware resources, it sets up or resets the cpu's operating states for optimal operation at all times, and it organizes the data for long-term non-volatile storage with file systems on such media as disks, tapes, flash memory, etc.
+
+program execution
+
+the operating system provides an interface between an application program and the computer hardware, so that an application program can interact with the hardware only by obeying rules and procedures programmed into the operating system. the operating system is also a set of services which simplify development and execution of application programs. executing an application
+
+a kernel connects the application software to the hardware of a computer.
+
+program typically involves the creation of a process by the operating system kernel, which assigns memory space and other resources, establishes a priority for the process in multi-tasking systems, loads program binary code into memory, and initiates execution of the application program, which then interacts with the user and with hardware devices. however, in some systems an application can request that the operating system execute another application within the same process, either as a subroutine or in a separate thread, e.g., the link and attach facilities of os/360 and successors.
+
+interrupts
+
+main article: interrupt
+
+an interrupt (also known as an abort, exception, fault, signal,[63] or trap)[64] provides an efficient way for most operating systems to react to the environment. interrupts cause the central processing unit (cpu) to have a control flow change away from the currently running program to an interrupt handler, also known as an interrupt service routine (isr).[65][66] an interrupt service routine may cause the central processing unit (cpu) to have a context switch. Software interrupt
+
+A software interrupt is a message to a process that an event has occurred. This contrasts with a hardware interrupt, which is a message to the central processing unit (CPU) that an event has occurred. Software interrupts are similar to hardware interrupts, as both execute an interrupt service routine.
+
+Software interrupts may be normally occurring events. For example, a time slice may occur, prompting the kernel to perform a context switch. Additionally, software interrupts can be triggered by error conditions, such as a malformed machine instruction, division by zero, or accessing an invalid memory address.
+
+Users can send messages to the kernel to modify the behavior of a currently running process. For instance, pressing the interrupt character (usually control-c) in a command-line environment can terminate the process.
+
+To generate software interrupts for x86 CPUs, the int assembly language instruction is used. The syntax is int x, where x represents the offset number in hexadecimal format to the interrupt vector table.
+
+Signal
+
+In Unix-like operating systems, the kill(pid, signum) system call is utilized to send a signal to another process. The pid denotes the process identifier of the receiving process, while signum indicates the signal number. Signals in Unix-like operating systems inform processes of asynchronous events. Interrupts are required to communicate asynchronously. Processes need to communicate asynchronously to solve variations of the reader/writer problem. The kernel generates software interrupts to coordinate piping.
+
+Signals can be classified into 7 categories:
+
+1. Process finishes normally.
+2. Process has an error exception.
+3. Process runs out of a system resource.
+4. Process executes an illegal instruction.
+5. Process sets an alarm event.
+6. Process is aborted from the keyboard.
+7. Process has a tracing alert for debugging.
+
+Input/output (I/O) devices are slower than the CPU, so interrupts are used for I/O completion to avoid CPU waiting. Direct Memory Access (DMA) allows devices to access main memory directly. character appears immediately on the screen. when a user moves a mouse, the cursor immediately moves across the screen. each keystroke and mouse movement generates an interrupt called interrupt-driven i/o. an interrupt-driven i/o occurs when a process causes an interrupt for every character or word transmitted.
+
+direct memory access
+
+devices such as hard disk drives, solid-state drives, and magnetic tape drives can transfer data at a rate high enough that interrupting the cpu for every byte or word transferred, and having the cpu transfer the byte or word between the device and memory, would require too much cpu time. data is, instead, transferred between the device and memory independently of the cpu by hardware such as a channel or a direct memory access controller; an interrupt is delivered only when all the data is transferred.
+
+if a computer program executes a system call to perform a block i/o write operation, then the system call might execute the following instructions:
+
+set the contents of the cpu's registers into the process control block.
+create an entry in the device-status table. the operating system maintains this table to keep track of which processes are waiting for which devices. one field in the table is the memory address of the process control block.
+place all the characters to be sent to the device into a memory buffer.
+set the memory address of the memory buffer to a predetermined device register.
+set the buffer size to another predetermined register.
+execute the machine instruction to begin the writing.
+
+perform a context switch to the next process in the ready queue.
+
+while the writing takes place, the operating system will context switch to other processes as normal. when the device finishes writing, the device will interrupt the currently running process by asserting an interrupt request. the device will also place an integer onto the data bus. upon accepting the interrupt push the contents of the program counter (a register) followed by the status register onto the call stack.
+
+push the contents of the other registers onto the call stack. (alternatively, the contents of the registers may be placed in a system table.)
+
+read the integer from the data bus. the integer is an offset to the interrupt vector table. the vector table's instructions will then:
+
+access the device-status table.
+
+extract the process control block.
+
+perform a context switch back to the writing process.
+
+when the writing process has its time slice expired, the operating system will:
+
+pop from the call stack the registers other than the status register and program counter.
+
+pop from the call stack the status register.
+
+pop from the call stack the address of the next instruction, and set it back into the program counter.
+
+with the program counter now reset, the interrupted process will resume its time slice.
+
+modern computers support multiple modes of operation. cpus with this capability offer
+
+at least two modes: user mode and supervisor mode. in general terms, supervisor
+
+mode operation allows unrestricted access to all machine resources, including all mpu
+
+instructions. user mode operation sets limits on instruction use and typically disallows
+
+direct access to machine resources. cpus might have other modes similar to user
+
+mode as well, such as the virtual modes in order to emulate older processor types,
+
+such as 16-bit processors on a 32-bit one, or 32-bit processors on a 64-bit one.
+
+at power-on or reset, the system begins in supervisor mode. once an operating
+
+system kernel has been loaded and started, the boundary between user mode and
+
+supervisor mode (also known as kernel mode) can be established.
+
+supervisor mode is used by the kernel for low level tasks that need unrestricted
+
+access to hardware, such as controlling how memory is accessed, and communicating
+
+with devices. privilege rings for the x86 microprocessor architecture available in protected mode. operating systems determine which processes run in each mode.
+
+used for almost everything else. application programs, such as word processors and database managers, operate within user mode, and can only access machine resources by turning control over to the kernel, a process which causes a switch to supervisor mode.
+
+typically, the transfer of control to the kernel is achieved by executing a software interrupt instruction, such as the Motorola 68000 trap instruction. the software interrupt causes the processor to switch from user mode to supervisor mode and begin executing code that allows the kernel to take control.
+
+in user mode, programs usually have access to a restricted set of processor instructions, and generally cannot execute any instructions that could potentially cause disruption to the system's operation. in supervisor mode, instruction execution restrictions are typically removed, allowing the kernel unrestricted access to all machine resources.
+
+the term "user mode resource" generally refers to one or more CPU registers, which contain information that the running program is not allowed to alter. attempts to alter these resources generally cause a switch to supervisor mode, where the operating system can deal with the illegal operation the program was attempting; for example, by forcibly terminating ("killing") the program.
+
+memory management
+
+main article: memory management
+
+among other things, a multiprogramming operating system kernel must be responsible for managing all system memory which is currently in use by the programs. this ensures that a program does not interfere with memory already in use by another program.
+
+since programs time share, each program must have independent access to memory.
+
+cooperative memory management, used by many early operating systems, assumes that all programs make voluntary use of the kernel's memory manager, and do not exceed their allocated memory. this system of memory management is almost never seen any more, since programs often contain bugs which can cause them to exceed their allocated memory. if a program fails, it may cause memory used by one or more other programs to be affected or overwritten. malicious programs or viruses may purposefully alter another program's memory, or may affect the operation of the operating system itself. with cooperative memory management, it takes only one misbehaved program to crash the system.
+
+memory protection enables the kernel to limit a process' access to the computer's memory. various methods of memory protection exist, including memory segmentation and paging. all methods require some level of hardware support (such as the 80286 mmu), which does not exist in all computers.
+
+in both segmentation and paging, certain protected mode registers specify to the cpu what memory address it should allow a running program to access. attempts to access other addresses trigger an interrupt, which causes the cpu to re-enter supervisor mode, placing the kernel in charge. this is called a segmentation violation or seg-v for short, and since it is both difficult to assign a meaningful result to such an operation, and because it is usually a sign of a misbehaving program, the kernel generally resorts to terminating the offending program, and reports the error.
+
+windows versions 3.1 through me had some level of memory protection, but programs could easily circumvent the need to use it. a general protection fault would be produced, indicating a segmentation violation had occurred; however, the system would often crash anyway.
+
+virtual memory
+
+main article: virtual memory
+
+further information: page fault
+
+the use of virtual memory addressing (such as paging or segmentation) means that the kernel can choose what memory each program may use at any given time, allowing the operating system to use the same memory locations for multiple tasks.
+
+if a program tries to access Virtual memory provides the programmer or the user with the perception that there is a much larger amount of RAM in the computer than is really there.
+
+Concurrency
+
+Many operating systems can "trick" programs into using memory scattered around the hard disk and RAM as if it is one continuous chunk of memory, called virtual memory.
+
+Concurrency refers to the operating system's ability to carry out multiple tasks simultaneously. Virtually all modern operating systems support concurrency.
+
+Threads enable splitting a process' work into multiple parts that can run simultaneously. The number of threads is not limited by the number of processors available. If there are more threads than processors, the operating system kernel schedules, suspends, and resumes threads, controlling when each thread runs and how much CPU time it receives. During a context switch, a running thread is suspended, its state is saved into the thread control block and stack, and the state of the new thread is loaded in. Historically, on many systems a thread could run until it relinquished control (cooperative multitask. threads have their own thread id, program counter (pc), a register set, and a stack, but share code, heap data, and other resources with other threads of the same process. thus, there is less overhead to create a thread than a new process. on single-cpu systems, concurrency is switching between processes. many computers have multiple cpus. parallelism with multiple threads running on different cpus can speed up a program, depending on how much of it can be executed concurrently.
+
+permanent storage devices used in twenty-first century computers, unlike volatile dynamic random-access memory (dram), are still accessible after a crash or power failure. permanent (non-volatile) storage is much cheaper per byte, but takes several orders of magnitude longer to access, read, and write. the two main technologies are a hard drive consisting of magnetic disks, and flash memory (a solid-state drive that stores data in electrical circuits). the latter is more expensive but faster and more durable.
+
+file systems are an abstraction used by the operating system to simplify access to permanent storage. they provide human-readable filenames and other metadata, increase performance via amortization of accesses, prevent multiple threads from accessing the same section of memory, and include checksums to identify corruption. file systems are composed of files (named collections of data, of an arbitrary size) and directories (also called folders) that list human-readable filenames and other directories. path defines the location of a file from a directory.
+
+system calls enable applications to create, delete, open, and close files, as well as link, read, and write to them. all these operations are carried out by the operating system on behalf of the application. the operating system's efforts to reduce latency include storing recently requested blocks of memory in a cache and prefetching data that the application has not asked for, but might need next. device drivers are software specific to each input/output (i/o) device that enables the operating system to work without modification over different hardware.
+
+another component of file systems is a dictionary that maps a file's name and metadata to the data block where its contents are stored. most file systems use directories to convert file names to file numbers. to find the block number, the operating system uses an index (often implemented as a tree). separately, there is a free space map to track free blocks, commonly implemented as a bitmap. although any free block can be used to store a new file, many operating systems try to group together files in the same directory to maximize performance, or periodically reorganize files to reduce fragmentation.
+
+maintaining data reliability in the face of a computer crash or hardware failure is another concern. file writing protocols are designed with atomic operations so as not to leave permanent storage in a partially written, inconsistent state in the event of a crash at any point during writing. data corruption is addressed by redundant storage and checksums to detect when data has been corrupted. with multiple layers of checksums and backups of a file, a system can recover from multiple hardware failures. background processes are often used to detect and recover from data corruption.
+
+security
+
+main article: computer security protecting users from other users of the same computer, as well as from those seeking remote access to it over a network. operating systems security rests on achieving the cia triad: confidentiality, integrity, and availability. isolating security domains - the kernel, processes, and virtual machines - is key to achieving security. ways to increase security include simplicity, default resource access locking, authorization checks, least authority principle, privilege separation, and reducing shared data.
+
+operating system designs vary in security. those with no isolation between the kernel and applications are least secure. designs with a monolithic kernel are still vulnerable if any part is compromised. more secure designs feature microkernels that separate privileges into security domains. unikernels improve security by minimizing the kernel and separating out operating systems functionality by application.
+
+most operating systems are written in c or c++, creating potential vulnerabilities. buffer overflow attacks are enabled by the lack of bounds checking. hardware vulnerabilities, some caused by cpu optimizations, can compromise the operating system. instances of deliberate vulnerabilities, such as back doors, exist. Operating systems security is hampered by their increasing complexity and the resulting inevitability of bugs. Developers use operating system hardening to reduce vulnerabilities, such as address space layout randomization, control-flow integrity, access restrictions, and other techniques. Open source operating systems allow contributions from anyone and have transparent change histories and distributed governance structures. Open source developers collaborate to find and eliminate security vulnerabilities using code review and type checking. Andrew S. Tanenbaum advises releasing the source code of all operating systems to avoid relying on security by obscurity.
+
+A user interface (UI) is essential for human interaction with a computer, with command-line interfaces and graphical user interfaces (GUI) being the most common types. Personal computers and workstations typically use keyboards, mice, trackpads, or touchscreens for user input connected to the operating system with specialized software. GUIs are preferred by non-developer users and are supported by most personal computers, while programmers often prefer command-line interfaces for their simplicity. A hobby operating system may be classified as one whose code has not been directly derived from an existing operating system, and has few users and active developers. In some cases, hobby development is in support of a "homebrew" computing device, for example, a simple single-board computer powered by a 6502 microprocessor. Examples of hobby operating systems include Syllable and TempleOS. If an application is written for use on a specific operating system and is ported to another OS, the functionality required by that application may be implemented differently, requiring the application to be adapted, changed, or otherwise maintained. This cost in supporting operating systems diversity can be avoided by writing applications against software platforms such as Java or Qt. Another approach is for operating system vendors to adopt standards. system commander
+
+system image
+
+timeline of operating systems
+
+notes
+
+a. ^ a combination of dos/360 and emulation software was known as compatibility operating system (cos).
+
+b. ^ however, espol did allow source programs to specify all of the operations of the instruction repertoire.
+
+c. ^ bell labs quickly dropped out, leaving ge and mit.
+
+d. ^ modern cpus provide instructions (e.g. sysenter) to invoke selected kernel services without an interrupts. visit https://wiki.osdev.org/sysenter for more information.
+
+e. ^ examples include sigint, sigsegv, and sigbus.
+
+f. ^ often in the form of a dma chip for smaller systems and i/o channels for larger systems.
+
+g. ^ modern motherboards have a dma controller. additionally, a device may also have one. visit scsi rdma protocol.
+
+h. ^ there are several reasons that the memory might be inaccessible:
+
+the address might be out of range
+
+the address might refer to a page or segment that has been moved to a backing store
+
+the address might refer to memory that has restricted access due to, e.g., key, ring.
+
+references
+
+1. ^ stallings (2005). operating systems, internals and design
+
+65. ^ tanenbaum, andrew s. (1990). structured computer principles. pearson: prentice hall. p. 6.
+
+organization, third edition. prentice hall. p. 308. isbn 978-0-13-854662-5. "like the trap, the interrupt stops the running program and transfers control to an interrupt handler, which performs some appropriate action. when finished, the interrupt handler returns control to the interrupted program."
+
+3. ^ a b "desktop operating system market share worldwide" statcounter global stats. archived from the original on 2 october 2023. retrieved 3 october 2023.
+
+66. ^ silberschatz, abraham (1994). operating system concepts, fourth edition. addison-wesley. p. 32. isbn 978-0-201-50480-4.
+
+4. ^ "mobile & tablet operating system market share worldwide" statcounter global stats. retrieved 2 october 2023. Special-purpose systems - Operating System Concepts, Seventh Edition [Book]. 
+
+"Special-purpose Operating Systems - RWTH Aachen University Institute for Automation of Complex Power Systems - English". "state of the CPU by storing registers and the program counter.
+
+Then, it determines which type of interrupt has occurred. For each
+
+type of interrupt, separate segments of code in the operating
+
+system determine what action should be taken."
+
+"Switching the CPU to another process requires saving the state
+
+of the old process and loading the saved state for the new
+
+process. This task is known as a context switch."
+
+"Hardware may trigger an interrupt at any time by sending a
+
+signal to the CPU, usually by way of the system bus."
+
+"Signals are analogous to hardware interrupts in that they interrupt the normal
+
+flow of execution of a program; in most cases, it is not possible to
+
+predict exactly when a signal will arrive."
+
+"Among the types
+
+of events that cause the kernel to generate a signal for a process
+
+are the following: a software event occurred. For example, ... the
+
+process's CPU time limit was exceeded[.]" starch press. p. 400. isbn 978-1-59327-220-3.
+
+76. ^ a b tanenbaum, andrew s. (1990). structured computer
+
+organization, third edition . prentice hall. p. 308 . isbn 978-
+
+0-13-854662-5.
+
+77. ^ silberschatz, abraham (1994). operating system concepts,
+
+fourth edition. addison-wesley. p. 182. isbn 978-0-201-50480-4.
+
+78. ^ haviland, keith; salama, ben (1987). unix system
+
+programming. addison-wesley publishing company. p. 153.
+
+36. ^ kilburn, t.; payne, r. b.; howarth, d. j. (december 1961). "the
+
+isbn 0-201-12919-1. introducing openedition mvs. first edition. ibm. december 1993. gc23-3010-00.
+
+openedition mvs posix.1 conformance document. first edition. ibm. february 1993. gc23-3011-00.
+
+openedition mvs posix.2 conformance document. first edition. ibm. december 1993. gc23-3012-00.
+
+"twenty years of linux according to linus torvalds". zdnet. april 13, 2011. archived from the original on september 19, 2016. retrieved september 19, 2016.
+
+linus benedict torvalds (5 october 1991). "free minix-like kernel sources for 386-at". newsgroup: comp.os.minix. archived from the original on 2 march 2013. retrieved 30 september 2011.
+
+haviland, keith; salama, ben (1987). unix system programming. addison-wesley publishing company. p. 148. isbn 0-201-12919-1.
+
+haviland, keith; salama, ben (1987). unix system programming. addison-wesley publishing company. p. 149. isbn 0-201-12919-1.
+
+tanenbaum, andrew s. (1990). structured computer organization, third edition. prentice hall. p. 292. isbn 978-0-13-854662-5.
+
+ibm (september 1968), "main storage" (pdf), ibm system/360 principles of operation (pdf), eighth edition, p. 7, archived (pdf) from the original on 19 march 2022, retrieved 13 april 2022
+
+tanenbaum, andrew s. (1990). structured computer organization, third edition. prentice hall. p. 294. isbn 978-0-13-854662-5.
+
+"program interrupt controller (pic)" (pdf). users handbook - pdp-7 (pdf). digital equipment corporation. 1965. pp. 48. f-75. archived (pdf) from the original on 10 may 2022. retrieved 20 april 2022.
+
+pdp-1 input-output systems manual (pdf). digital equipment corporation. pp. 19–20. archived (pdf) from the original on 25 january 2019. retrieved 16 august 2022.
+
+silberschatz, abraham (1994). operating system concepts, fourth edition. addison-wesley. p. 3 Operating System Concepts, ISBN 978-0-201-50480-4.
+
+Structured Computer Organization, Third Edition, ISBN 978-0-13-854662-5.
+
+Computer Organization & Architecture, ISBN 978-81-203-2962-1. "using NDIS 2 PCMCIA network card drivers in Windows 95". Microsoft Support. Archived from the original on 17 February 2013. Retrieved 7 August 2012.
+
+"Info: Windows 95 multimedia wave device drivers must be 16 bit". Microsoft Support. Archived from the original on 17 February 2013. Retrieved 7 August 2012.
+
+Arthur, Charles (5 January 2011). "'Windows 8' will run on ARM chips - but third-party apps will need rewrite". The Guardian. Archived from the original on 12 October 2016.
+
+"Operating system share by groups for sites in all locations January 2009". Archived from the original on 6 July 2009. Retrieved 3 May 2010.
+
+"Behind the IDC data: Windows still no. 1 in server operating systems". ZDNet. 26 February 2010. Archived from the original on 1 March 2010. notification to a process that an event has occurred. signals are sometimes described as software interrupts.
+
+the art of assembly language programming. no starch press. archived from the original on 22 december 2021. retrieved 22 december 2021. "the concept of an interrupt is something that has expanded in scope over the years. the 80x86 family has only added to the confusion surrounding interrupts by introducing the int (software interrupt) instruction. indeed, different manufacturers have used terms like exceptions, faults, aborts, traps and interrupts to describe the phenomena this chapter discusses. unfortunately, there is no clear consensus as to the exact meaning of these terms. different authors adopt different terms to their use." operating systems for safety-critical applications.
+
+deitel, harvey m.; deitel, paul; choffnes, david (25 december 2015). operating systems . pearson/prentice hall. isbn 978-0-13-092641-8.
+
+bic, lubomur f.; shaw, alan c. (2003). operating systems. pearson: prentice hall.
+
+silberschatz, avi; galvin, peter; gagne, greg (2008). operating systems concepts. john wiley & sons. isbn 978-0-470-12872-5.
+
+leva, alberto; maggio, martina; papadopoulos, alessandro vittorio; terraneo (2013). control-based operating system design. iet. isbn 978-1-84919-609-3.
+
+arpaci-dusseau, remzi; arpaci-dusseau, andrea (2015). operating systems: three easy pieces.
+
+richet, jean-loup; bouaynaya, wafa (2023). "understanding and managing complex software vulnerabilities: an empirical analysis of open-source operating systems". systèmes d'information & management. 28 (1): 87–114. doi:10.54695/sim.28.1.0087 (inactive 13 june 2024).
+
+silberschatz, abraham; galvin, peter b.; gagne, greg (2018). operating system concepts (10 ed.). wiley. isbn 978-1-119-32091-3.
+
+tanenbaum, andrew s.; bos, herbert (2023). modern operating systems, global edition. pearson higher ed. isbn 978-1-292-72789-9. You agree to the terms of use and privacy policy. Wikipedia® is a registered trademark of the Wikimedia Foundation, Inc., a non-profit organization.

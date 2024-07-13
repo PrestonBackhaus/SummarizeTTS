@@ -70,7 +70,7 @@ class Summarizer:
                 current_group.append(paragraphs[i])
                 continue
             
-            similarity = current_group[-1].similarity(para)
+            similarity = para.similarity(self.nlp(current_group[-1]))
             if similarity > threshold:
                 current_group.append(paragraphs[i])
             else:
@@ -86,7 +86,8 @@ class Summarizer:
     def summarize_document(self, pdf_path):
         full_text = self.extract_text_from_pdf(pdf_path)
         cleaned_text = self.clean_large_text(full_text)
-        paragraphs = self.split_text_by_paragraphs(cleaned_text)
+        refined_text = self.refine_text_with_gpt(cleaned_text)
+        paragraphs = self.split_text_by_paragraphs(refined_text)
         sections = self.group_paragraphs_by_similarity(paragraphs)
 
         summaries = []
@@ -132,26 +133,53 @@ class Summarizer:
         cleaned_text = ' '.join(cleaned_chunks)
         return cleaned_text
     
-    # Clean using gpt-4o, this might start to get costly
+    # Clean using gpt-3.5 turbo, this might start to get costly
     def clean_text_with_gpt(self, text, max_tokens=2048, temperature=0.7):
         prompt = f"""
-        Clean the following text by removing all unnecessary content, such as navigation bars, footers, references, and other non-essential information. Ensure that only the main content remains. Do not include any introductory phrases or concluding statemets; provide only the cleaned text.
+        Clean the following text by removing all unnecessary content, such as navigation bars, footers, references, and other non-essential information. Ensure that only the main content remains. Do not include any introductory phrases or concluding statements; provide only the cleaned text.
         
         Text to clean:
         {text}
         """
         response = self.client.chat.completions.create(
             messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "system", "content": "You are a helpful assistant skilled in cleaning text."},
                 {"role": "user", "content": prompt}
             ],
             model="gpt-3.5-turbo",
             max_tokens=max_tokens,
             temperature=temperature
         )
-        cleaned_text = response.choices[0].message.content.text.strip()
+        cleaned_text = response.choices[0].message.content.strip()
         return cleaned_text
+    
+    # Structure cleaned text, reduce redundancy
+    def refine_text_with_gpt(self, text, max_tokens=3950, temperature=0.7):
+        prompt = f"""
+        Further clean and structure the following text. 
+        1. Remove any remaining redundant information
+        2. Standardize formatting and fix any potential errors
+        3. Identify distinct sections and add appropriate headings
+        4. Do not summarize or omit any meaningful content
+        5. Ensure the text flows logically from one topic to the next
 
+        Return the full refined text, maintaining all relevant content and meaning.
+
+        Text to refine:
+        {text}
+        """
+        
+        response = self.client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant skilled in cleaning and structuring text."},
+                {"role": "user", "content": prompt}
+            ],
+            model="gpt-3.5-turbo",
+            max_tokens=max_tokens,
+            temperature=temperature
+        )
+        refined_text = response.choices[0].message.content.strip()
+        return refined_text
 
     # Clean the text by removing unwanted text
     def clean_text(self, text):
