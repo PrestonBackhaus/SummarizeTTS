@@ -16,53 +16,45 @@ def test_extract_text_from_pdf():
     print("Extracted Text: ")
     print(text[:1000])
 
-def test_split_text_by_paragraphs():
+def test_clean_and_refine_text():
     summarizer = Summarizer()
     text = summarizer.extract_text_from_pdf(pdf_path)
-    cleaned_text = summarizer.clean_large_text(text)
-    paragraphs = summarizer.split_text_by_paragraphs(cleaned_text)
-    assert len(paragraphs) > 1
-    print("Paragraphs: ")
-    for i, para in enumerate(paragraphs):
-        print(f"Paragraph {i+1}:")
-        print(para[:1000])
-        print()
+    cleaned_and_refined_text = summarizer.clean_and_refine_text(text[:15000])
+    assert cleaned_and_refined_text is not None
+    assert len(cleaned_and_refined_text) > 0
+    print("Cleaned and Refined Text: ")
+    print(cleaned_and_refined_text[:1000])
+    summarizer.to_file(cleaned_and_refined_text, "cleaned_and_refined_text")
 
-def test_group_paragraphs_by_similarity():
+def test_summarize_document():
     summarizer = Summarizer()
-    text = summarizer.extract_text_from_pdf(pdf_path)
-    cleaned_text = summarizer.clean_large_text(text)
-    paragraphs = summarizer.split_text_by_paragraphs(cleaned_text)
-    sections = summarizer. group_paragraphs_by_similarity(paragraphs)
-    assert len(sections) > 1
-    print("Sections: ")
-    for i, section in enumerate(sections):
-        print(f"Section {i+1}:")
-        print(section[:1000])
-        print()
+    final_summary = summarizer.summarize_document(pdf_path)
+    assert final_summary is not None
+    assert len(final_summary) > 0
+    print("Final Summary: ")
+    print(final_summary)
+    summarizer.to_file(final_summary, "final_summary15000chars")
 
-def test_clean_text():
+def test_summarize_and_vocalize():
     summarizer = Summarizer()
-    text = summarizer.extract_text_from_pdf(pdf_path)
-    cleaned_text = summarizer.clean_large_text(text)
-    assert cleaned_text is not None
-    assert len(cleaned_text) > 0
-    print("Cleaned Text: ")
-    print(cleaned_text[:1000])
-    summarizer.to_file(cleaned_text, "cleaned_text")
-
+    summary = summarizer.summarize_and_vocalize(pdf_path, "final_summary.txt", "os_summary_audio.mp3")
+    assert summary is not None
+    assert len(summary) > 0
+    print("Summary:")
+    with open("final_summary.txt", 'r', encoding='utf-8') as f:
+        print(f.read())
+    print("Audio version of the summary has been saved to 'os_summary_audio.mp3'")
 
 def main():
     summarizer = Summarizer()
-
     final_summary = summarizer.summarize_document(pdf_path)
-
     print("Final Summary: ")
     print(final_summary)
 
 if __name__ == "__main__":
-    # main()
+    # Uncomment the test you want to run
     # test_extract_text_from_pdf()
-    test_clean_text()
-    # test_split_text_by_paragraphs()
-    # test_group_paragraphs_by_similarity()
+    # test_clean_and_refine_text()
+    # test_summarize_document()
+    test_summarize_and_vocalize()
+    # main()
