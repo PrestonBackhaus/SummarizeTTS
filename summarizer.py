@@ -17,24 +17,33 @@ class Summarizer:
         self.nlp = spacy.load("en_core_web_sm")
 
     # Summarize text using the GPT-4o model
-    def summarize_text(self, text, max_tokens=1024, temperature=0.7):
+    def summarize_with_gpt4o(self, text, max_tokens=7500, temperature=0.7):
         prompt = f"""
-        Summarize the following text in a flowing, narrative style, formatted in paragraphs. Ensure that the summary covers the main ideas, explains key terms, and includes important details. Do not include any introductory phrases or concluding statements; provide only the summary text.
+        Provide a comprehensive summary of the following text. Follow these guidelines:
+        1. Capture all main ideas, key concepts, and important details.
+        2. Include supplementary details that provide context or deeper understanding.
+        3. The summary should be thorough but not exceed 25% of the input text's length.
+        4. Ensure the summary is coherent, well-structured, and flows logically.
+        5. If the input text starts or ends abruptly due to chunking:
+        - For abrupt starts: Begin the summary naturally, inferring context if necessary.
+        - For abrupt ends: Conclude the summary at the last complete thought or section.
+        6. Do not disregard any potentially useful information.
+        7. If the text contains distinct sections, maintain this structure in the summary.
 
-        Text to summarize: 
+        Text to summarize:
         {text}
         """
-
+        
         response = self.client.chat.completions.create(
             messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "system", "content": "You are a highly capable assistant skilled in summarizing complex information comprehensively and accurately."},
                 {"role": "user", "content": prompt}
             ],
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             max_tokens=max_tokens,
             temperature=temperature
         )
-        summary = response.choices[0].message.content.text.strip()
+        summary = response.choices[0].message.content.strip()
         return summary
     
     # Write the summary to a text file
@@ -54,78 +63,25 @@ class Summarizer:
         text = text.lower()
         return text
     
-    # Split text into paragraphs
-    def split_text_by_paragraphs(self, text):
-        paragraphs = re.split(r'\n\s*\n', text)
-        return [para.strip() for para in paragraphs if para.strip()]
-
-    # Group alike paragraphs
-    def group_paragraphs_by_similarity(self, paragraphs, threshold=0.5):
-        doc_paragraphs = [self.nlp(para) for para in paragraphs]
-        groups = []
-        current_group = []
-
-        for i, para in enumerate(doc_paragraphs):
-            if not current_group:
-                current_group.append(paragraphs[i])
-                continue
-            
-            similarity = para.similarity(self.nlp(current_group[-1]))
-            if similarity > threshold:
-                current_group.append(paragraphs[i])
-            else:
-                groups.append("\n\n".join(current_group))
-                current_group = [paragraphs[i]]
-        
-        if current_group:
-            groups.append("\n\n".join(current_group))
-        
-        return groups
-    
     # Summarize text from a PDF file
     def summarize_document(self, pdf_path):
         full_text = self.extract_text_from_pdf(pdf_path)
         cleaned_text = self.clean_large_text(full_text)
         refined_text = self.refine_text_with_gpt(cleaned_text)
-        paragraphs = self.split_text_by_paragraphs(refined_text)
-        sections = self.group_paragraphs_by_similarity(paragraphs)
-
-        summaries = []
-        for section in sections:
-            summary = self.summarize_text(section)
-            summaries.append(summary)
-
+        
+        # Split refined text into 30,000 token chunks
+        chunks = self.split_text_into_chunks(refined_text, chunk_size=30000)
+        
+        summaries = [self.summarize_with_gpt4o(chunk) for chunk in chunks]
         combined_summary = ' '.join(summaries)
-        final_summary = self.summarize_text(combined_summary)
-
+        
+        final_summary = self.summarize_with_gpt4o(combined_summary, max_tokens=15000)
         return final_summary
-
-    # Check the summary and revise
-    def check_summary(self, text, max_tokens=1024, temperature=0.7):
-        prompt = f"""
-        Check the following summary for accuracy, clarity, and coherence. Revise the summary as needed to ensure that it is well-written and effectively communicates the main ideas of the text. Keep the content the same, but check the flow and narrative to ensure it is able to be properly converted to speech. Do not include any introductory phrases or concluding statements; provide only the summary text.
-
-        Summary to check: 
-        {text}
-        """
-
-        response = self.client.chat.completions.create(
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": prompt}
-            ],
-            model="gpt-3.5-turbo",
-            max_tokens=max_tokens,
-            temperature=temperature
-        )
-        revised_summary = response.choices[0].message.content.text.strip()
-        return revised_summary
     
     # Split text into manageable chunks
-    def split_text_into_chunks(self, text, chunk_size=2048):
-        chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
-        return chunks
-    
+    def split_text_into_chunks(self, text, chunk_size=30000):
+        return [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+        
     # Clean large text
     def clean_large_text(self, text):
         chunks = self.split_text_into_chunks(text)
@@ -180,38 +136,3 @@ class Summarizer:
         )
         refined_text = response.choices[0].message.content.strip()
         return refined_text
-
-    # Clean the text by removing unwanted text
-    def clean_text(self, text):
-        # Define patterns to remove unwanted text
-        patterns = [
-            r'Privacy policy.*Terms of Use and Privacy Policy.',  # Remove footer
-            r'Text is available under the Creative Commons Attribution-ShareAlike License.*',  # Remove license info
-            r'Contents.*hide',  # Remove contents table
-            r'\[\d+\]',  # Remove references like [48]
-            r'\[.*?\]',  # Remove any text in brackets
-            r'\n+',  # Replace multiple newlines with a single newline
-            r'Edit\n',  # Remove 'Edit' links
-            r'Jump to navigation\nJump to search\n',  # Remove navigation text
-            r'Categories:.*?\n',  # Remove category listings
-            r'Hidden categories:.*?\n',  # Remove hidden category listings
-            r'Help\n',  # Remove help links
-            r'From Wikipedia, the free encyclopedia',  # Remove Wikipedia intro
-            r'[\r\n]+',  # Replace multiple newlines with a single newline
-            r'^\s*$',  # Remove empty lines
-            r'^[ \t]+|[ \t]+$',  # Trim leading/trailing spaces
-        ]
-        
-        for pattern in patterns:
-            text = re.sub(pattern, '', text, flags=re.DOTALL | re.MULTILINE)
-            
-        # Further cleaning using spaCy
-        doc = self.nlp(text)
-        cleaned_sentences = []
-        for sent in doc.sents:
-            if len(sent.text.strip()) > 10:
-                cleaned_sentences.append(sent.text.strip())
-        
-        cleaned_text = ' '.join(cleaned_sentences)
-        return cleaned_text.strip()
-
