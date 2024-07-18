@@ -1,1 +1,8 @@
 .env
+final_summary.txt
+os_summary_audio.mp3
+final_summary15000chars.txt
+cleaned_text.txt
+__pycache__/
+.pytest_cache/
+**/.cache

@@ -4,7 +4,7 @@ import sys
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, project_root)
 
-from summarizer import Summarizer
+from summarizer.summarizer import Summarizer
 
 pdf_path = os.path.join(os.path.dirname(__file__), "OSWikipedia.pdf")
 

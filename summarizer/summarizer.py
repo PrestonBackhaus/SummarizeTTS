@@ -147,12 +147,23 @@ class Summarizer:
 
 
 
-'''
     def main():
-        summarizer = Summarizer()
-        final_summary = summarizer.summarize_document(pdf_path)
-        print("Final Summary: ")
-        print(final_summary)
-        summarizer.to_file(final_summary, "main_final_summary")
-        print("Summary saved to 'main_final_summary.txt'")
-'''
+            summarizer = Summarizer()
+            
+            # Specify the path to your PDF file
+            pdf_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "examples", "OSWikipedia.pdf")
+            
+            # Specify the output files
+            summary_file = os.path.join(os.path.dirname(__file__), "main_final_summary.txt")
+            audio_file = os.path.join(os.path.dirname(__file__), "summary_audio.mp3")
+            
+            # Summarize and vocalize
+            final_summary = summarizer.summarize_and_vocalize(pdf_path, summary_file, audio_file)
+            
+            print("Final Summary: ")
+            print(final_summary)
+            print(f"Summary saved to '{summary_file}'")
+            print(f"Audio summary saved to '{audio_file}'")
+
+if __name__ == "__main__":
+    Summarizer.main()
